@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cn.my.e3mall</groupId>
+    <artifactId>mye3mall_parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>mye3mall_manager</artifactId>
+  <packaging>pom</packaging>
+  <name>电商项目 聚合工程</name>
+    <build>
+        <plugins>
+            <!-- 配置Tomcat插件 -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <configuration>
+                    <port>8080</port>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+    	<module>mye3mall_manager_web</module>
+    	<module>mye3mall_manager_interface</module>
+    	<module>mye3mall_manager_service</module>
+    	<module>mye3mall_manager_dao</module>
+    	<module>mye3mall_manager_pojo</module>
+    </modules>
+    <dependencies>
+    	<dependency>
+    		<groupId>cn.my.e3mall</groupId>
+    		<artifactId>mye3mall_common</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
+</project>
