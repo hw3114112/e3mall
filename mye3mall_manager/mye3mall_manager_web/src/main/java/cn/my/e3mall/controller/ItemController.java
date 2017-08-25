@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.my.e3mall.pojo.TbItem;
 import cn.my.e3mall.service.ItemService;
 
+/**
+ * 
+ * @author hw311
+ *
+ */
 @Controller
 public class ItemController {
 
