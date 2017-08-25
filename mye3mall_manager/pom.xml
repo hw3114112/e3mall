@@ -22,7 +22,6 @@
         </plugins>
     </build>
     <modules>
-    	<module>mye3mall_manager_web</module>
     	<module>mye3mall_manager_interface</module>
     	<module>mye3mall_manager_service</module>
     	<module>mye3mall_manager_dao</module>
