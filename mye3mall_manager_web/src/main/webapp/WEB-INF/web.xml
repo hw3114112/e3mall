@@ -28,15 +28,6 @@
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 
-<!-- 项目启动时初始化Spring -->
-<context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/applicationContext*.xml <!--填写正确的核心配置文件位置--> </param-value>
-</context-param>                                                
-<listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-</listener>
-
 <!-- SpringMVC前端控制器 -->
 <servlet>
     <servlet-name>springmvc</servlet-name>
