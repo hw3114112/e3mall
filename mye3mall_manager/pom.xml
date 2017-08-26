@@ -8,9 +8,9 @@
   <artifactId>mye3mall_manager</artifactId>
   <packaging>pom</packaging>
   <name>电商项目 聚合工程</name>
-    <build>
+<!--     <build>
         <plugins>
-            <!-- 配置Tomcat插件 -->
+            配置Tomcat插件
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -20,7 +20,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
     <modules>
     	<module>mye3mall_manager_interface</module>
     	<module>mye3mall_manager_service</module>
