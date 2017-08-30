@@ -84,6 +84,10 @@
         	<artifactId>mye3mall_manager_interface</artifactId>
         	<version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+        	<groupId>commons-fileupload</groupId>
+        	<artifactId>commons-fileupload</artifactId>
+        </dependency>
   </dependencies>
 <!--     <build>
         <plugins>

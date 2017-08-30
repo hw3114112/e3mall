@@ -21,8 +21,14 @@
 
     <!-- 引用dubbo服务 -->
     <dubbo:application name="e3-manager-web"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.126.128:2181"/>    
+    <dubbo:registry protocol="zookeeper" address="192.168.25.128:2181"/>    
     <dubbo:reference interface="cn.my.e3mall.service.ItemService" id="itemService" />
     <dubbo:reference interface="cn.my.e3mall.service.ItemCatService" id="itemCatService" />
 
+	<!-- 文件上传,id必须设置为multipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="5242880" />
+	</bean>
+	
+	<context:property-placeholder location="classpath:conf/resource.properties"/>
 </beans>

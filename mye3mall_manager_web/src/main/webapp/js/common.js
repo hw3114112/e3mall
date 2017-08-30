@@ -43,7 +43,7 @@ var E3 = {
 	},
 	// 格式化价格
 	formatPrice : function(val,row){
-		return (val/1000).toFixed(2);
+		return (val/100).toFixed(2);
 	},
 	// 格式化商品的状态
 	formatItemStatus : function formatStatus(val,row){
@@ -107,6 +107,7 @@ var E3 = {
     	$(".selectItemCat").each(function(i,e){
     		var _ele = $(e);
     		if(data && data.cid){
+    			console.info(data);
     			_ele.after("<span style='margin-left:10px;'>"+data.cid+"</span>");
     		}else{
     			_ele.after("<span style='margin-left:10px;'></span>");
