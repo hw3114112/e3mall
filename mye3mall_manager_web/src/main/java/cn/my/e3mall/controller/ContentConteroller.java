@@ -19,7 +19,7 @@ public class ContentConteroller {
 	@RequestMapping("/content/query/list")
 	@ResponseBody
 	public DataGridResult listByCid(Long categoryId, Integer page, Integer rows) {
-		return contentService.findContentListByCid(categoryId, page, rows);
+		return contentService.findContentPageByCid(categoryId, page, rows);
 	}
 
 	@RequestMapping("/content/save")

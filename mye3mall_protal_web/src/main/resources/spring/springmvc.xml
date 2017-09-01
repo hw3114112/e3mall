@@ -21,10 +21,10 @@
 	</bean>
 
     <!-- 引用dubbo服务 -->
-<!--     <dubbo:application name="e3-manager-web"/> -->
-<!--     <dubbo:registry protocol="zookeeper" address="192.168.25.128:2181"/>     -->
-<!--     <dubbo:reference interface="cn.my.e3mall.service.ItemService" id="itemService" /> -->
-<!--     <dubbo:reference interface="cn.my.e3mall.service.ItemCatService" id="itemCatService" /> -->
+    <dubbo:application name="e3-protal-web"/>
+    <dubbo:registry protocol="zookeeper" address="192.168.25.128:2181"/>    
+    <dubbo:reference interface="cn.my.e3mall.content.service.ContentService" id="contentService" />
+    
 <!--     图片服务器位置 -->
 	<context:property-placeholder location="classpath:conf/resource.properties"/>
 </beans>

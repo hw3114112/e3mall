@@ -1,5 +1,7 @@
 package cn.my.e3mall.content.service;
 
+import java.util.List;
+
 import cn.my.e3mall.common.pojo.DataGridResult;
 import cn.my.e3mall.common.pojo.E3Result;
 import cn.my.e3mall.pojo.TbContent;
@@ -13,7 +15,7 @@ public interface ContentService {
 	 * @param page 
 	 * @return easyUI需要的 DataGrid 
 	 */
-	DataGridResult findContentListByCid(Long categoryId, Integer page, Integer rows);
+	DataGridResult findContentPageByCid(Long categoryId, Integer page, Integer rows);
 
 	/**
 	 * 新增 内容
@@ -36,4 +38,11 @@ public interface ContentService {
 	 */
 	E3Result batchDelete(String ids);
 
+	/**
+	 * 根据 内容分类id 查询结果
+	 * 先走缓存
+	 * @param categoryId
+	 * @return jsp需要的list
+	 */
+	List<TbContent> findByCid(Long categoryId);
 }
