@@ -1,0 +1,15 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cn.my.e3mall</groupId>
+    <artifactId>mye3mall_parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>mye3mall_search</artifactId>
+  <packaging>pom</packaging>
+  <name>搜索 聚合工程</name>
+  <modules>
+  	<module>mye3mall_search_interface</module>
+  	<module>mye3mall_search_service</module>
+  </modules>
+</project>
