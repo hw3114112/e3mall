@@ -2,15 +2,27 @@ package cn.my.e3mall.service.impl;
 
 import java.util.Date;
 
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.my.e3mall.common.jedis.JedisClient;
 import cn.my.e3mall.common.pojo.DataGridResult;
 import cn.my.e3mall.common.pojo.E3Result;
 import cn.my.e3mall.common.pojo.IDUtils;
+import cn.my.e3mall.common.utils.JsonUtils;
 import cn.my.e3mall.mapper.TbItemDescMapper;
 import cn.my.e3mall.mapper.TbItemMapper;
 import cn.my.e3mall.pojo.TbItem;
@@ -21,14 +33,48 @@ import cn.my.e3mall.service.ItemService;
 @Service
 public class ItemServiceImpl implements ItemService {
 
+	private static final String DESC = ":DESC";
+	private static final String BASE = ":BASE";
+	private static final String ITEM_INFO = "ITEM_INFO:";
+	@Value("${redis.item.expire}")
+	private int redisItemExpire;
 	@Autowired
 	private TbItemMapper itemMapper;
 	@Autowired
 	private TbItemDescMapper itemDescMapper;
-
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Autowired
+	private Destination topicDestination; //addItemTopic
+	@Autowired
+	private JedisClient jedisClient;
+	
 	@Override
 	public TbItem getItemById(long id) {
+		String redisKey = ITEM_INFO+id+BASE;
+		try {
+			//先从缓存中获取, 不要影响正常的业务逻辑
+			String itemJson = jedisClient.get(redisKey);
+			if (StringUtils.hasText(itemJson)) {
+				//刷新存活时间
+				jedisClient.expire(redisKey, redisItemExpire);
+				TbItem item = JsonUtils.jsonToPojo(itemJson, TbItem.class);
+				return item;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		TbItem item = itemMapper.selectByPrimaryKey(id);
+		try {
+			//缓存中没有而数据库中有时, 添加到缓存
+			if (null!=item) {
+				jedisClient.set(redisKey, JsonUtils.objectToJson(item));
+				//刷新存活时间
+				jedisClient.expire(redisKey, redisItemExpire);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return item;
 	}
 
@@ -40,7 +86,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public E3Result addItem(TbItem item, String desc) {
+	public E3Result addItem(final TbItem item, String desc) {
 		// 1、生成商品id
 		// 实现方案：
 		// c) 可以直接去毫秒值+随机数。可以使用。
@@ -65,14 +111,45 @@ public class ItemServiceImpl implements ItemService {
 		item.setUpdated(date);
 		// 6、向商品描述表插入数据
 		itemDescMapper.insert(itemDesc);
+		// 新增商品 发送消息 
+		jmsTemplate.send(topicDestination, new MessageCreator() {
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				TextMessage message = session.createTextMessage(""+ item.getId());
+				return message;
+			}
+		});
 		// 7、E3Result.ok()
 		return E3Result.ok();
 	}
 
 	@Override
-	public E3Result getItemDescByItemId(Long itemId) {
+	public TbItemDesc getItemDescByItemId(Long itemId) {
+		String redisKey = ITEM_INFO+itemId+DESC;
+		try {
+			//先从缓存中获取, 不要影响正常的业务逻辑
+			String itemJson = jedisClient.get(redisKey);
+			if (StringUtils.hasText(itemJson)) {
+				//刷新存活时间
+				jedisClient.expire(redisKey, redisItemExpire);
+				TbItemDesc item = JsonUtils.jsonToPojo(itemJson, TbItemDesc.class);
+				return item;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		TbItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(itemId);
-		return E3Result.ok(itemDesc);
+		try {
+			//缓存中没有而数据库中有时, 添加到缓存
+			if (null!=itemDesc) {
+				jedisClient.set(redisKey, JsonUtils.objectToJson(itemDesc));
+				//刷新存活时间
+				jedisClient.expire(redisKey, redisItemExpire);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemDesc;
 	}
 
 	@Override

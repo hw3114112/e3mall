@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 包扫描器 -->
-	<context:component-scan base-package="cn.my.e3mall.search.service,cn.my.e3mall.search.dao"/>
+	<context:component-scan base-package="cn.my.e3mall.search"/>
 
 	<!-- SolrServer的配置 -->
 	<bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">

@@ -28,16 +28,7 @@ public class SearchItemServiceImpl implements SearchItemService {
 			// 导入索引库
 			for (SearchItem searchItem : itemList) {
 				// 创建文档对象
-				SolrInputDocument document = new SolrInputDocument();
-				// 向文档中添加域
-				document.addField("id", searchItem.getId());
-				document.addField("item_title", searchItem.getTitle());
-				document.addField("item_sell_point", searchItem.getSell_point());
-				document.addField("item_price", searchItem.getPrice());
-				document.addField("item_image", searchItem.getImage());
-				document.addField("item_category_name", searchItem.getCategory_name());
-				// 写入索引库
-				solrServer.add(document);
+				solrAddItemDocument(searchItem,false);
 			}
 			// 提交
 			solrServer.commit();
@@ -51,4 +42,24 @@ public class SearchItemServiceImpl implements SearchItemService {
 
 	}
 
+	@Override
+	public void solrAddItemDocument(SearchItem searchItem,boolean autoCommit) throws Exception {
+		SolrInputDocument document = new SolrInputDocument();
+		// 向文档中添加域
+		document.addField("id", searchItem.getId());
+		document.addField("item_title", searchItem.getTitle());
+		document.addField("item_sell_point", searchItem.getSell_point());
+		document.addField("item_price", searchItem.getPrice());
+		document.addField("item_image", searchItem.getImage());
+		document.addField("item_category_name", searchItem.getCategory_name());
+		// 写入索引库
+		solrServer.add(document);
+		if (autoCommit)
+			solrServer.commit();
+	}
+
+	@Override
+	public void solrAddItemDocument(SearchItem searchItem) throws Exception {
+		this.solrAddItemDocument(searchItem, true);
+	}
 }

@@ -3,6 +3,7 @@ package cn.my.e3mall.service;
 import cn.my.e3mall.common.pojo.DataGridResult;
 import cn.my.e3mall.common.pojo.E3Result;
 import cn.my.e3mall.pojo.TbItem;
+import cn.my.e3mall.pojo.TbItemDesc;
 /**
  * 商品 service层接口
  * @author hw311
@@ -38,7 +39,7 @@ public interface ItemService {
 	 * @param itemId
 	 * @return 商品描述
 	 */
-	E3Result getItemDescByItemId(Long itemId);
+	TbItemDesc getItemDescByItemId(Long itemId);
 
 	/**
 	 * 更新商品数据及商品描述
