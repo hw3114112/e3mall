@@ -87,6 +87,6 @@ public class ItemController {
 		} else if ("instock".equals(action)) {
 			status = 2;
 		}
-		return itemService.batchChangeItemsStatusById(ids, status);
+		return itemService.updateItemsStatusById(ids, status);
 	}
 }

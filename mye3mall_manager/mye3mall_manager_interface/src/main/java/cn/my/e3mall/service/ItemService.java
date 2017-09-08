@@ -55,6 +55,6 @@ public interface ItemService {
 	 * @param status
 	 * @return
 	 */
-	E3Result batchChangeItemsStatusById(String ids, Byte status);
+	E3Result updateItemsStatusById(String ids, Byte status);
 
 }

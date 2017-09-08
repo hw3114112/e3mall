@@ -11,6 +11,11 @@ import cn.my.e3mall.pojo.TbItem;
 import cn.my.e3mall.pojo.TbItemDesc;
 import cn.my.e3mall.service.ItemService;
 
+/**
+ * 商品详情动态页面 Controller
+ * @author hw311
+ *
+ */
 @Controller
 public class ItemInfoController {
 

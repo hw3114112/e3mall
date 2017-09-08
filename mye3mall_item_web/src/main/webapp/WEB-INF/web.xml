@@ -43,7 +43,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
-		<url-pattern>*.html<!-- "/":只放行jsp --></url-pattern>
+		<url-pattern>/<!-- "/":只放行jsp --></url-pattern>
 		<!-- 取值为:"/"时, SpringMVC配置中可以配置 静态资源放行mvc:default-servlet-handler -->
 	</servlet-mapping>
 </web-app>

@@ -171,7 +171,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public E3Result batchChangeItemsStatusById(String ids, Byte status) {
+	public E3Result updateItemsStatusById(String ids, Byte status) {
 		try {
 			// 创建一个空的item用于更新
 			TbItem item = new TbItem();
